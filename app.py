@@ -1,6 +1,6 @@
 from fastapi import *
-from fastapi.responses import FileResponse
 import json
+from fastapi.responses import JSONResponse, FileResponse
 import mysql.connector
 def connect_mysql():
 	return  mysql.connector.connect( user="root",password="newPassword1234!", host="localhost", database="taipei_day_trip")
@@ -41,10 +41,7 @@ def attractions(page: int, keyword:str=None):
 				"images": imgs 
 	 			}
 			)
-		return{
-			"nextPage": next_page,"data": data
-		}
-			
+		return JSONResponse(content={"nextPage": next_page,"data": data},media_type="application/json; charset=utf-8")
 	except Exception as e:
 		raise HTTPException(status_code=500, detail={
 			"error":True,
@@ -82,7 +79,7 @@ def attraction(attractionId:int):
 			"lng":result["lng"],
 			"imgs":imgs
 		}
-		return{"data":data}
+		return JSONResponse(content={"data":data},media_type="application/json; charset=utf-8")
 	except Exception as e:
 		raise HTTPException(status_code=500,detail={
 			"error": True,
@@ -102,7 +99,7 @@ def mrt():
 		data=[]
 		for r in result:
 			data.append(r["mrt"])
-		return {"data":data}
+		return JSONResponse(content={"data":data},media_type="application/json; charset=utf-8")
 	except Exception as e:
 		raise HTTPException(status_code=500, detail={
 			"error": True,
