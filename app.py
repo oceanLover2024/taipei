@@ -3,7 +3,7 @@ from fastapi.responses import FileResponse
 import json
 import mysql.connector
 def connect_mysql():
-	return  mysql.connector.connect( user="root",password="1234", host="localhost", database="taipei_day_trip")
+	return  mysql.connector.connect( user="root",password="newPassword1234!", host="localhost", database="taipei_day_trip")
 app= FastAPI()
 @app.get("/api/attractions")
 def attractions(page: int, keyword:str=None):
