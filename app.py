@@ -13,9 +13,9 @@ def attractions(page: int, keyword:str=None):
 		limit=12
 		offset=page* limit
 		if keyword:
-			cursor.execute("SELECT * FROM attractions WHERE name LIKE %s or mrt LIKE %s LIMIT %s OFFSET %s",(f"%{keyword}%", f"%{keyword}%", limit+1, offset))
+			cursor.execute("SELECT a.id, a.name, a.category, a.description, a.address, a.transport, a.mrt, a.lat, a.lng, GROUP_CONCAT(i.url) as images FROM attractions a LEFT JOIN imgs i ON a.id = i.attraction_id WHERE a.name LIKE %s or a.mrt LIKE %s GROUP BY a.id LIMIT %s OFFSET %s",(f"%{keyword}%", f"%{keyword}%", limit+1, offset))
 		else:
-			cursor.execute("SELECT * FROM attractions LIMIT %s OFFSET %s",(limit+1, offset))
+			cursor.execute("SELECT a.id, a.name, a.category, a.description, a.address, a.transport, a.mrt, a.lat, a.lng, GROUP_CONCAT(i.url) as images FROM attractions a LEFT JOIN imgs i ON a.id = i.attraction_id GROUP BY a.id LIMIT %s OFFSET %s",(limit+1, offset))
 		result = cursor.fetchall()
 		data = []
 		if len(result) > limit:
@@ -24,10 +24,10 @@ def attractions(page: int, keyword:str=None):
 		else:
 			next_page = None
 		for r in result:
-			cursor.execute("SELECT url FROM imgs WHERE attraction_id = %s",(r["id"],))
-			imgs = []
-			for img_data in cursor.fetchall():
-				imgs.append(img_data["url"])
+			if r["images"]:
+				images= r["images"].split(",")
+			else:
+				images=[]
 			data.append({
 				"id": r["id"],
 				"name": r["name"] ,
@@ -38,7 +38,7 @@ def attractions(page: int, keyword:str=None):
 				"mrt": r["mrt"] ,
 				"lat": r["lat"],
 				"lng": r["lng"],
-				"images": imgs 
+				"images": images 
 	 			}
 			)
 		return JSONResponse(content={"nextPage": next_page,"data": data},media_type="application/json; charset=utf-8")
