@@ -19,7 +19,7 @@ function callback(entries) {
 }
 async function fetchData(url) {
   try {
-    const response = await fetch(`http://3.113.164.103:8000${url}`);
+    const response = await fetch(`http://52.192.22.142:8000${url}`);
     return await response.json();
   } catch (e) {
     console.log("fetchDataError:", e);
