@@ -9,7 +9,7 @@ def connect_mysql():
 app= FastAPI()
 app.mount("/", StaticFiles(directory="static",html=True), name="static")
 app.add_middleware(
-	CORSMiddleware,allow_origins=["http://3.113.164.103:8000"],
+	CORSMiddleware,allow_origins=["http://52.192.22.142:8000/"],
 	allow_credentials=True, 
 	allow_methods=["*"], 
 	allow_headers=["*"]
