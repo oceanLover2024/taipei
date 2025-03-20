@@ -2,12 +2,14 @@ from fastapi import *
 from fastapi.middleware.cors import CORSMiddleware
 import json
 from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 import mysql.connector
 def connect_mysql():
 	return  mysql.connector.connect( user="root",password="newPassword1234!", host="localhost", database="taipei_day_trip")
 app= FastAPI()
+app.mount("/", StaticFiles(directory="static",html=True), name="static")
 app.add_middleware(
-	CORSMiddleware,allow_origins=["*"],
+	CORSMiddleware,allow_origins=["http://3.113.164.103:8000"],
 	allow_credentials=True, 
 	allow_methods=["*"], 
 	allow_headers=["*"]
