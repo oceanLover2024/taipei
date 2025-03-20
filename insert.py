@@ -1,7 +1,7 @@
 import json
 import mysql.connector
 con = mysql.connector.connect(
-    user="root",password="newPassword1234!", host="localhost", database="taipei_day_trip")
+    user="root",password="newPassword1234!", host="127.0.0.1", database="taipei_day_trip")
 cursor= con.cursor()
 def img_filter(imgstr):
 	urls=imgstr.split("https://")
