@@ -47,7 +47,7 @@ header {
 .text1 {
   font-weight: 700;
   font-size: 28px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: #f8f8f8f8;
 }
 .text2 {
@@ -57,7 +57,7 @@ header {
 }
 .query_box {
   display: flex;
-  margin: 10px;
+  margin: 20px 10px;
 }
 .keyword_box {
   width: 400px;
@@ -73,7 +73,7 @@ input::placeholder {
   padding-left: 16px;
   font-size: 16px;
 }
-::-webkit-input-placeholder {
+input::-webkit-input-placeholder {
   color: #757575;
   font-weight: 700;
   padding-left: 16px;
