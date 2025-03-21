@@ -102,25 +102,12 @@ function scrollMrt() {
       scrollStation.innerHTML = data[d];
       mrt.appendChild(scrollStation);
     }
-    let rightIcon = document.querySelector(".right_direction_icon");
-    let leftIcon = document.querySelector(".left_direction_icon");
-    let scrolling = null;
-    let goRight = mrt.scrollTo(mrt.scrollLeft + 50, 0);
-    let goLeft = mrt.scrollTo(mrt.scrollLeft - 50, 0);
-    rightIcon.addEventListener("click", () => goleft);
-    rightIcon.addEventListener("mousedown", () => {
-      removeEventListener("click", goRight);
-      scrolling = setInterval(() => mrt.scrollTo(mrt.scrollLeft + 5, 0), 20);
-    });
-    rightIcon.addEventListener("mouseup", () => clearInterval(scrolling));
-    rightIcon.addEventListener("mouseleave", () => clearInterval(scrolling));
-    leftIcon.addEventListener("click", () => goLeft);
-    leftIcon.addEventListener("mousedown", () => {
-      removeEventListener("click", goLeft);
-      scrolling = setInterval(() => mrt.scrollTo(mrt.scrollLeft - 5, 0), 20);
-    });
-    leftIcon.addEventListener("mouseup", () => clearInterval(scrolling));
-    leftIcon.addEventListener("mouseleave", () => clearInterval(scrolling));
+    document
+      .querySelector(".right_direction_icon")
+      .addEventListener("click", () => mrt.scrollTo(mrt.scrollLeft + 60, 0));
+    document
+      .querySelector(".left_direction_icon")
+      .addEventListener("click", () => mrt.scrollTo(mrt.scrollLeft - 60, 0));
 
     let keywordBox = document.querySelector(".keyword_box");
     for (let num = 0; num < data.length; num++) {
