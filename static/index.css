@@ -57,6 +57,7 @@ header {
 }
 .query_box {
   display: flex;
+  margin: 10px;
 }
 .keyword_box {
   width: 400px;
@@ -69,7 +70,13 @@ header {
 input::placeholder {
   color: #757575;
   font-weight: 700;
-  padding-left: 10px;
+  padding-left: 16px;
+  font-size: 16px;
+}
+::-webkit-input-placeholder {
+  color: #757575;
+  font-weight: 700;
+  padding-left: 16px;
   font-size: 16px;
 }
 .search_keyword_btn {
