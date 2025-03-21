@@ -1,0 +1,231 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #ffffff;
+  box-shadow: 0px 10px 10px -10px #757575;
+}
+.nav_container {
+  display: flex;
+  width: 1200px;
+  height: 50px;
+  margin: 0 auto;
+  align-items: center;
+}
+.nav_title {
+  flex: auto;
+  width: auto;
+  margin: 10px;
+  color: #448899;
+  font-weight: 700;
+  font-size: 30px;
+}
+.nav_subtitle {
+  flex: none;
+  width: 8%;
+  justify-content: flex-end;
+}
+header {
+  height: 320px;
+  display: flex;
+  align-items: center;
+  background-image: url("https://s3-alpha-sig.figma.com/img/8e51/49c7/686e7b3ebaa358e8438012f5d6a7a7b6?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Go9GMnqkForpf0bkFnG~4CEiLtITS2pTDfIn0ukQmg9XFZxdzatrMKiy6hdBlEAzG09UBnOS7lAzs2sGSxC7m0hDiaddrI4DWj5y6HsG-wJJ1Mm2dUHNnYhslMT-iss~QhzMJbOLHzCdhOldh1ltfrOlrfWHztMEPvfxcRH~JzS93E-Ujp3DshioDZg6kKHYb2CdwMym7QiX~K1VCW3A1033DfzYtKsQxrIvPqlBmfjc3Jm7tFZo649Z1~vKhJdX2ueZiaBJSZUYeVO-YBvzI0F8P7ntLlnKylvx1CVIKJM2FeYmEajzgNO6cTNnt-AD-oVzZIX1ULOCDOj5XSmHCA__");
+  background-repeat: no-repeat;
+  background-size: 1920px 480px;
+}
+.outer_header {
+  width: 1200px;
+  margin: 0 auto;
+}
+.header_text {
+  margin: 10px;
+}
+.text1 {
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #f8f8f8f8;
+}
+.text2 {
+  font-weight: 700;
+  font-size: 16px;
+  color: #f8f8f8f8;
+}
+.query_box {
+  display: flex;
+  margin: 20px 10px;
+}
+.keyword_box {
+  width: 400px;
+  height: 46px;
+  box-sizing: border-box;
+  border-radius: 5px 0px 0px 5px;
+  border: none;
+  outline-color: #448899;
+}
+input[type="text"] {
+  font-weight: 700;
+  font-size: 16px;
+  padding-left: 16px;
+}
+input::placeholder {
+  color: #757575;
+  font-weight: 700;
+  font-size: 16px;
+}
+input::-webkit-input-placeholder {
+  color: #757575;
+  font-weight: 700;
+  font-size: 16px;
+}
+.search_keyword_btn {
+  width: 60px;
+  height: 46px;
+  background-color: #448899;
+  border: none;
+  border-radius: 0px 5px 5px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.search_icon {
+  width: 30px;
+  height: 30px;
+}
+.list_bar {
+  width: 1200px;
+  margin: 40px auto 10px;
+  height: 70px;
+  display: flex;
+}
+.mrt {
+  flex: auto;
+  display: flex;
+  margin: 5px;
+  overflow: hidden;
+}
+.station {
+  flex: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #666666;
+  margin-right: 30px;
+  cursor: pointer;
+}
+.right_direction_icon {
+  width: 32px;
+  height: 32px;
+}
+.left_direction_icon {
+  width: 32px;
+  height: 32px;
+  opacity: 0.5;
+}
+.attractions {
+  width: 1200px;
+  margin: 10px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 240px);
+  gap: 30px;
+}
+.attraction {
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+}
+.img_block {
+  position: relative;
+  flex: 1; /* 彈性填滿剩餘空間 */
+  height: 75%;
+}
+.img_block img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.attraction_name {
+  height: 40px;
+  background-color: #000000;
+  opacity: 0.6;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  text-indent: 5px;
+}
+.detail_block {
+  height: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+}
+.mrt_station {
+  font-weight: 700;
+  color: #757575;
+}
+.category {
+  font-weight: 700;
+  color: #757575;
+}
+footer {
+  background-color: #757575;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer_text {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+@media (max-width: 1200px) {
+  .nav_container {
+    width: 90%;
+  }
+  .nav_subtitle {
+    width: 15%;
+  }
+  .outer_header {
+    width: 90%;
+  }
+  .list_bar {
+    width: 90%;
+  }
+  .attractions {
+    width: 90%;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  header {
+    background-position: left;
+  }
+  .attractions {
+    width: 90%;
+    grid-template-columns: 1fr;
+  }
+  .nav_subtitle {
+    flex: none;
+    width: 25%;
+    justify-content: space-between;
+  }
+  header {
+    background-position: bottom;
+  }
+}
