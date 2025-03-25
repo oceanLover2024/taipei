@@ -2,6 +2,7 @@ let attraction_name = [];
 let categoryList = [];
 let mrtList = [];
 let imageList = [];
+let id = [];
 let nextPage = 0;
 let loading = false;
 let keyword = "";
@@ -26,7 +27,7 @@ async function fetchData(url) {
     return null;
   }
 }
-function getData(page) {
+function getData() {
   loading = true;
   let url = `/api/attractions?page=${nextPage}`;
   if (keyword) {
@@ -42,6 +43,7 @@ function getData(page) {
         categoryList.push(d["category"]);
         mrtList.push(d["mrt"]);
         imageList.push(d["images"][0]);
+        id.push(d["id"]);
       }
       renderData();
     })
@@ -49,9 +51,10 @@ function getData(page) {
 }
 function renderData() {
   let attractions = document.querySelector(".attractions");
-  for (i = 0; i < attraction_name.length; i++) {
+  for (let i = 0; i < attraction_name.length; i++) {
     let attraction = document.createElement("div");
     attraction.setAttribute("class", "attraction");
+    attraction.setAttribute("data-id", id[i]);
     attractions.appendChild(attraction);
     let ImgBlock = document.createElement("div");
     ImgBlock.setAttribute("class", "img_block");
@@ -74,11 +77,18 @@ function renderData() {
     category.innerHTML = categoryList[i];
     category.setAttribute("class", "category");
     detailBlock.appendChild(category);
+    attraction.addEventListener("click", function () {
+      location.href = `${window.location.origin}/attraction/${this.getAttribute(
+        "data-id"
+      )}`;
+    });
   }
+
   attraction_name = [];
   categoryList = [];
   mrtList = [];
   imageList = [];
+  id = [];
 }
 
 function searchKeyword() {
@@ -123,10 +133,14 @@ function scrollMrt() {
 }
 document.addEventListener("DOMContentLoaded", function () {
   getData(nextPage);
+
   scrollMrt();
   const observer = new IntersectionObserver(callback, options);
   observer.observe(document.querySelector("footer"));
   document.querySelector(".keyword_box").addEventListener("keyup", (e) => {
     if (e.key === "Enter") searchKeyword();
   });
+  document
+    .querySelector(".nav_title")
+    .addEventListener("click", () => (location.href = window.location.origin));
 });

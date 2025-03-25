@@ -136,6 +136,7 @@ input::-webkit-input-placeholder {
 }
 .attraction {
   border: 1px solid #e8e8e8;
+  cursor: pointer;
   border-radius: 5px;
   height: 240px;
   display: flex;
