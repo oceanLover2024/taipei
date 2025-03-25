@@ -32,7 +32,7 @@ nav {
 }
 
 .menu {
-  margin: 0 auto;
+  margin: 40px auto;
   display: flex;
   justify-content: space-around;
   width: 1200px;
@@ -129,6 +129,22 @@ label {
   line-height: 1.6;
   margin: 12px;
 }
+input[type="date"] {
+  border: none;
+  width: 190px;
+  height: 35px;
+  font-weight: 400;
+  font-size: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-size: 24px;
+  background-position: right 8px center;
+  background-repeat: no-repeat;
+  background-image: url("https://s3-alpha-sig.figma.com/img/428d/1693/5ff7fe75a58bd30b757f7d6d2d2f2c42?Expires=1743984000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=ArPuzmKdG-~s41iqsUBAh7Lu-8sFcDXb~o8YkUTajgTco1i9ykBIRlEaNrY68U41xlhPun5ucMdhzLOfB0XcuYfWLtQm9rDgMnxtqC2KAmTmK32WENw5X1ik9WyP9mh5qEr8AnYsfjM-1po9DZdmjkISW781CRPoJqVGUm56Jl7fWgwJ0fkNFpxI3yhJfB6c-6mKPH0EwARshpMQ10SDgXxSpmSUK88qw0eAuaeQxY4DkM5jHAj3ZSiICusoHUXWrsCC7wmFB3mz7JOw8OERpV3kZfMRUHnJ3eqhmp-tihXrY9ecYcezFuh9tzXn9Es6eqKjhFNnYkz97f~s~vVVgw__");
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
 input[type="radio"] {
   appearance: none;
   width: 22px;
@@ -154,10 +170,10 @@ input[type="radio"]:checked {
   border: none;
   cursor: pointer;
 }
-hr {
+.line {
   width: 1200px;
-  size: 1px;
-  color: #e8e8e8;
+  height: 1px;
+  background-color: #e8e8e8;
   margin: 40px auto;
 }
 .information {
@@ -199,7 +215,7 @@ footer {
   .menu {
     width: 100%;
   }
-  hr {
+  .line {
     width: 90%;
   }
   .information {
@@ -215,6 +231,7 @@ footer {
   .menu {
     display: block;
     height: auto;
+    margin: 0 auto;
   }
   .current_pic {
     width: 100%;
