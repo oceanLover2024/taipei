@@ -133,6 +133,7 @@ input[type="date"] {
   border: none;
   width: 190px;
   height: 35px;
+  background-color: #ffffff;
   font-weight: 400;
   font-size: 16px;
   appearance: none;
