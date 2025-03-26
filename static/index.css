@@ -28,6 +28,9 @@ nav {
   flex: none;
   width: 8%;
   justify-content: flex-end;
+  color: #666666;
+  font-size: 16px;
+  font-weight: 500;
 }
 header {
   height: 320px;
@@ -136,6 +139,7 @@ input::-webkit-input-placeholder {
 }
 .attraction {
   border: 1px solid #e8e8e8;
+  cursor: pointer;
   border-radius: 5px;
   height: 240px;
   display: flex;
@@ -220,9 +224,12 @@ footer {
     width: 90%;
     grid-template-columns: 1fr;
   }
+  .nav_title {
+    margin: 3px;
+  }
   .nav_subtitle {
     flex: none;
-    width: 25%;
+    width: 22%;
     justify-content: space-between;
   }
   header {

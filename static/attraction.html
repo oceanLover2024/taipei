@@ -1,11 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Attraction</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attraction</title>
+    <link rel="stylesheet" href="/static/attraction.css" />
+    <script src="/static/attraction.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav_container">
+        <div class="nav_title">台北一日遊</div>
+        <div class="nav_subtitle nav_reserve">預定行程</div>
+        <div class="nav_subtitle nav_sign">登入/註冊</div>
+      </div>
+    </nav>
+    <main>
+      <div class="menu">
+        <div class="current_pic">
+          <img
+            onclick="plusSlide(-1)"
+            class="left_arrow"
+            src="https://s3-alpha-sig.figma.com/img/6778/6302/0ccc5ce8b30b3d331a45ecdf90f129e1?Expires=1743984000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=t9ljRECKLlwZxefnrGN17aGuKxb59ozXH2r2rvlPbZ0q-Jy4PZ7ro2VrMclkCME7gfIThqJ1bf~m589-WvofT3qJ25gSXZkYpG6DP29Y6uhGd7y5cfhePEfUgnivqhzZDTTb005xSjbbMcp5dOxS7nsWxB2An2kSb5J2hwDx5e-V7AwAdacvbdM7fHrtXLdvB2dHOWlFIjUCIxQQzsAJ7HEzk2m2LUxTOO10DzK7nZvaRPW6GqxrX1ZS1Yd6lVYGmeFUlp0NBeWEFQFTVx6wr067PXhxq2i8YoEAUuEGMFBKb7lIs~Vvvdv~LEsWh6qoH3vBNoDMb4Bu3A8Pr2vvLQ__"
+          />
+          <img
+            onclick="plusSlide(1)"
+            class="right_arrow"
+            src="https://s3-alpha-sig.figma.com/img/2411/4817/bdfa2bd566c1379581f5b31c6a6a01bc?Expires=1743984000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=pkrEr9xDZ73-AxZTh6WGOd7l~IVIdILz7gE-UCdymO5QASWgNN9xMvTqaP9VhLCB9E52GlS6Iqg1Lc0sPDa7OYToHjBy8o7YngQlGwEEDvKKk1Dqzezi80clnFsRuZCupsuQ1gne4M17dJ7algfVDoBDWjF3Zf8w-6Oz6lWifOvxiN05L~1sAgXplUf2oUCgntISIdKXB~6lxDoGc8P2CgWn1jntELm5741HOZFYAxgjxL1boItue8a7PpJ4OJfIjWcKdau-cGuwXZmd9atJE1nsEkPF7z00FeuTHLttq7QDSDPxXGvwvXuCZPtoczc938m5gTppHs7nrdQG0-Uq7A__"
+          />
+          <div class="circles"></div>
+        </div>
+        <div class="profile">
+          <div class="profile_title"></div>
+          <div class="profile_detail"></div>
+          <div class="profile_booking_form">
+            <div class="booking_title">訂購導覽行程</div>
+            <div class="booking_text">
+              以此為中心的一日行程，帶您探索城市角落故事
+            </div>
+            <div class="select_date">選擇日期： <input type="date" /></div>
+            <div class="select_time">
+              選擇時間：
+
+              <input type="radio" name="time" />
+              <label>上半天</label>
+              <input type="radio" name="time" />
+              <label>下半天</label>
+            </div>
+
+            <div class="fee_title">導覽費用：<span class="fee"></span></div>
+            <input type="submit" class="submit_btn" value="開始預約行程" />
+          </div>
+        </div>
+      </div>
+      <div class="line"></div>
+      <div class="information">
+        <div class="info"></div>
+        <div class="address"></div>
+        <div class="transport"></div>
+      </div>
+    </main>
+    <footer>
+      <div class="footer_text">COPYRIGHT © 2021 台北一日遊</div>
+    </footer>
+  </body>
 </html>
