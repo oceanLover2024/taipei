@@ -1,3 +1,5 @@
+import { createBox } from "./box.js";
+import { auth } from "./auth.js";
 async function fetchAttraction() {
   try {
     const response = await fetch(
@@ -50,9 +52,6 @@ fetchAttraction().then((result) => {
     "click",
     () => (document.querySelector(".fee").innerHTML = "新台幣2500元")
   );
-  document
-    .querySelector(".nav_title")
-    .addEventListener("click", () => (location.href = window.location.origin));
 });
 let slideIndex = 0;
 function showSlides(x) {
@@ -70,3 +69,11 @@ function showSlides(x) {
 function plusSlide(n) {
   showSlides((slideIndex += n));
 }
+document
+  .querySelector(".left_arrow")
+  .addEventListener("click", () => plusSlide(-1));
+document
+  .querySelector(".right_arrow")
+  .addEventListener("click", () => plusSlide(1));
+createBox();
+auth();

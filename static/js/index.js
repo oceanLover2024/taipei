@@ -1,3 +1,5 @@
+import { createBox } from "./box.js";
+import { auth } from "./auth.js";
 let attraction_name = [];
 let categoryList = [];
 let mrtList = [];
@@ -38,7 +40,7 @@ function getData() {
       if (!result) return;
       const data = result["data"];
       nextPage = result["nextPage"];
-      for (d of data) {
+      for (let d of data) {
         attraction_name.push(d["name"]);
         categoryList.push(d["category"]);
         mrtList.push(d["mrt"]);
@@ -105,7 +107,7 @@ function scrollMrt() {
   fetchData(url).then((result) => {
     if (!result) return;
     const data = result["data"];
-    for (d in data) {
+    for (let d in data) {
       let scrollStation = document.createElement("div");
       scrollStation.setAttribute("class", "station");
       scrollStation.setAttribute("id", "st" + d);
@@ -140,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelector(".keyword_box").addEventListener("keyup", (e) => {
     if (e.key === "Enter") searchKeyword();
   });
-  document
-    .querySelector(".nav_title")
-    .addEventListener("click", () => (location.href = window.location.origin));
+  createBox();
+  auth();
 });

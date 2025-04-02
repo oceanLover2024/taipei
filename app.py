@@ -1,8 +1,13 @@
+from datetime import datetime,timezone,timedelta
 from fastapi import *
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
+from fastapi.security import HTTPBearer,HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
+import jwt
 import mysql.connector
+from passlib.context import CryptContext
+from pydantic import BaseModel, EmailStr
 def connect_mysql():
 	return  mysql.connector.connect( user="root",password="newPassword1234!", host="127.0.0.1", database="taipei_day_trip")
 app= FastAPI()
@@ -13,6 +18,83 @@ app.add_middleware(
 	allow_methods=["*"], 
 	allow_headers=["*"]
 )
+bearer_tool=HTTPBearer()
+password_tool=CryptContext(schemes=['bcrypt'],deprecated='auto')
+ALGORITHM="HS256"
+secret_key="123"
+def create_token(data:dict):
+	to_encode=data.copy()
+	expire=datetime.now(timezone.utc)+timedelta(days=7)
+	to_encode.update({"exp":expire})
+	return jwt.encode(to_encode,secret_key,algorithm=ALGORITHM)
+def verify_token(c:HTTPAuthorizationCredentials=Depends(bearer_tool)):
+	token=c.credentials
+	try:
+		return jwt.decode(token,secret_key,algorithms=[ALGORITHM])
+	except jwt.ExpiredSignatureError:
+		raise HTTPException(status_code=401,detail="token過期")
+	except jwt.InvalidTokenError:
+		raise HTTPException(status_code=401,detail="token無效")
+class Signin(BaseModel):
+	email:EmailStr
+	password:str
+class Register(BaseModel):
+	name:str
+	email:EmailStr
+	password:str
+@app.post("/api/user")
+def register(user:Register):
+	try:
+		con=connect_mysql()
+		cursor=con.cursor(dictionary=True)
+		cursor.execute("SELECT id FROM member WHERE email=%s",(user.email,))
+		db_user=cursor.fetchone()
+		if db_user:
+			raise HTTPException(status_code=400,detail={"error":True,"message":"註冊失敗，Email已被註冊"})
+		hashed_password=password_tool.hash(user.password)		
+		cursor.execute("INSERT INTO member(name,email,password)values(%s,%s,%s)",(user.name,user.email,hashed_password))
+		con.commit()
+		return{"ok":True}
+	except mysql.connector.Error:
+		raise HTTPException(status_code=500,detail={"error":True,"message":"伺服器內部錯誤"})
+	finally:
+		cursor.close()
+		con.close()
+@app.put("/api/user/auth")
+def signin(user:Signin):
+	try:
+		con=connect_mysql()
+		cursor=con.cursor(dictionary=True)
+		cursor.execute("SELECT id, name, email, password FROM member WHERE email=%s",(user.email,))
+		db_user= cursor.fetchone()
+		if not db_user or not password_tool.verify(user.password,db_user["password"]):
+			raise HTTPException(status_code=400,detail={"error":True,"message":"登入失敗，帳號或密碼錯誤"})
+		token=create_token({
+			"id":db_user["id"],
+			"name":db_user["name"],
+			"email":db_user["email"],		
+		})
+		return{"token":token}
+	except mysql.connector.Error:
+		raise HTTPException(status_code=500,detail={"error":True,"message":"伺服器內部錯誤"})
+	finally:
+		con.close()
+		cursor.close()
+@app.get("/api/user/auth")
+def current_user(data:dict=Depends(verify_token)):
+	try:
+		con=connect_mysql()
+		cursor=con.cursor(dictionary=True)
+		cursor.execute("SELECT id, name, email FROM member where email=%s",(data["email"],))
+		db_user=cursor.fetchone()
+		if not db_user:
+			return {"data":None}
+		return {"data":db_user}
+	except mysql.connector.Error:
+		raise HTTPException(status_code=500,detail={"error":True,"message":"伺服器內部錯誤"})
+	finally:
+		con.close()
+		cursor.close()
 @app.get("/api/attractions")
 def attractions(page: int, keyword:str=None):
 	try:
