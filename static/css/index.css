@@ -166,22 +166,22 @@ input::-webkit-input-placeholder {
   .index .nav_subtitle {
     width: 15%;
   }
-  .index .outer_header {
+  .outer_header {
     width: 90%;
   }
-  .index .list_bar {
+  .list_bar {
     width: 90%;
   }
-  .index .attractions {
+  .attractions {
     width: 90%;
     grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (max-width: 600px) {
-  .index header {
-    background-position: left;
+  header {
+    background-position: center;
   }
-  .index .attractions {
+  .attractions {
     width: 90%;
     grid-template-columns: 1fr;
   }
@@ -193,9 +193,7 @@ input::-webkit-input-placeholder {
     width: 22%;
     justify-content: space-between;
   }
-  .index header {
-    background-position: bottom;
-  }
+
   .index .block_style {
     width: 95%;
   }

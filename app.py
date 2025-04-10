@@ -1,4 +1,4 @@
-from datetime import datetime,timezone,timedelta
+from datetime import datetime,timezone,timedelta, date
 from fastapi import *
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
@@ -28,7 +28,7 @@ def create_token(data:dict):
 	to_encode.update({"exp":expire})
 	return jwt.encode(to_encode,secret_key,algorithm=ALGORITHM)
 def verify_token(c:HTTPAuthorizationCredentials=Depends(bearer_tool)):
-	token=c.credentials
+	token=c.credentials	
 	try:
 		return jwt.decode(token,secret_key,algorithms=[ALGORITHM])
 	except jwt.ExpiredSignatureError:
@@ -42,6 +42,11 @@ class Register(BaseModel):
 	name:str
 	email:EmailStr
 	password:str
+class CreateBooking(BaseModel):
+	attractionId:int
+	date:date
+	time:str
+	price:int 
 @app.post("/api/user")
 def register(user:Register):
 	try:
@@ -95,6 +100,64 @@ def current_user(data:dict=Depends(verify_token)):
 	finally:
 		con.close()
 		cursor.close()
+@app.get("/api/booking")
+def get_booking(user:dict=Depends(verify_token)):		
+	try:
+		con=connect_mysql()
+		cursor=con.cursor(dictionary=True)		
+		cursor.execute("SELECT a.id, a.name, a.address, i.url, b.date, b.time, b.price From attractions a INNER JOIN booking b ON a.id = b.attraction_id LEFT JOIN imgs i ON  a.id = i.attraction_id WHERE b.member_id=%s",(user["id"],))
+		data=cursor.fetchone()
+		if not data:
+			return {"data":None}
+		return{
+			"data":{
+				"attraction":{
+					"id":data["id"],
+					"name":data["name"],
+					"address":data["address"],
+					"image":data["url"]
+				},
+				"date":data["date"],
+				"time":data["time"],
+				"price":data["price"]
+			}
+		}
+	except mysql.connector.Error:
+		raise HTTPException(status_code=500,detail={"error":True,"message":"伺服器內部錯誤"})
+	finally:
+		con.close()
+		cursor.close()
+@app.post("/api/booking")
+def create_booking(create_data:CreateBooking,user:dict=Depends(verify_token)):
+	try:
+		con=connect_mysql()
+		cursor=con.cursor(dictionary=True)
+		cursor.execute("SELECT * FROM booking WHERE member_id= %s",(user["id"],))
+		data=cursor.fetchone()
+		if data:
+			cursor.execute("DELETE FROM booking WHERE member_id= %s",(user["id"],))
+		cursor.execute("INSERT INTO booking(member_id, attraction_id, date, time, price)values(%s,%s,%s,%s,%s)",((user["id"]), create_data.attractionId, create_data.date, create_data.time,create_data.price))
+		con.commit()
+		return {"ok": True}
+	except:
+		raise HTTPException(status_code=500,detail={"error":True,"message":"伺服器內部錯誤"})
+	finally:
+		con.close()
+		cursor.close()
+@app.delete("/api/booking")
+def delete_booking(user:dict=Depends(verify_token)):
+	try:
+		con=connect_mysql()
+		cursor=con.cursor(dictionary=True)
+		cursor.execute("DELETE FROM booking WHERE member_id=%s",(user["id"],))
+		con.commit()
+		return {"ok": True}
+	except:
+		raise HTTPException(status_code=500,detail={"error":True,"message":"伺服器內部錯誤"})
+	finally:
+		con.close()
+		cursor.close()
+#--------------------------------------------
 @app.get("/api/attractions")
 def attractions(page: int, keyword:str=None):
 	try:

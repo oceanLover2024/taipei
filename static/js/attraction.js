@@ -1,5 +1,6 @@
 import { createBox } from "./box.js";
 import { auth } from "./auth.js";
+import { startbooking } from "./startbooking.js";
 async function fetchAttraction() {
   try {
     const response = await fetch(
@@ -77,3 +78,4 @@ document
   .addEventListener("click", () => plusSlide(1));
 createBox();
 auth();
+startbooking();

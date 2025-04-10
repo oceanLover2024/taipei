@@ -135,7 +135,6 @@ function scrollMrt() {
 }
 document.addEventListener("DOMContentLoaded", function () {
   getData(nextPage);
-
   scrollMrt();
   const observer = new IntersectionObserver(callback, options);
   observer.observe(document.querySelector("footer"));

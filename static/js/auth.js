@@ -10,11 +10,15 @@ export function auth() {
       .then((response) => response.json())
       .then((data) => {
         let navSign = document.querySelector(".nav_sign");
+        let nav_reserve = document.querySelector(".nav_reserve");
         if (data.data) {
           navSign.textContent = "登出系統";
           navSign.addEventListener("click", () => {
             localStorage.removeItem("token");
             location.reload();
+          });
+          nav_reserve.addEventListener("click", () => {
+            location.href = `${window.location.origin}/booking`;
           });
         } else {
           navSign.textContent = "登入/註冊";
