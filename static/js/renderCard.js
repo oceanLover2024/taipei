@@ -1,0 +1,37 @@
+export function renderCard() {
+  let main = document.querySelector("main");
+  let line = document.createElement("div");
+  line.setAttribute("class", "line");
+  let mainLayout = document.createElement("div");
+  mainLayout.setAttribute("class", "main_layout");
+  let cardInfoTitle = document.createElement("div");
+  cardInfoTitle.setAttribute("class", "first_line_text");
+  cardInfoTitle.textContent = "信用卡付款資訊";
+  let cardNumLabel = document.createElement("label");
+  let expirationTimeLabel = document.createElement("label");
+  let authPasswordLabel = document.createElement("label");
+  cardNumLabel.textContent = "卡片號碼：";
+  expirationTimeLabel.textContent = "過期時間：";
+  authPasswordLabel.textContent = "驗證密碼：";
+  let cardNumInput = document.createElement("input");
+  let expirationTimeInput = document.createElement("input");
+  let authPasswordInput = document.createElement("input");
+  cardNumInput.type = "password";
+  cardNumInput.placeholder = "**** **** **** ****";
+  expirationTimeInput.type = "text";
+  expirationTimeInput.maxLength = 5;
+  expirationTimeInput.placeholder = "MM / YY";
+  authPasswordInput.type = "password";
+  authPasswordInput.placeholder = "CVV";
+  main.appendChild(line);
+  main.appendChild(mainLayout);
+  mainLayout.appendChild(cardInfoTitle);
+  mainLayout.appendChild(cardNumLabel);
+  mainLayout.appendChild(cardNumInput);
+  mainLayout.appendChild(document.createElement("br"));
+  mainLayout.appendChild(expirationTimeLabel);
+  mainLayout.appendChild(expirationTimeInput);
+  mainLayout.appendChild(document.createElement("br"));
+  mainLayout.appendChild(authPasswordLabel);
+  mainLayout.appendChild(authPasswordInput);
+}

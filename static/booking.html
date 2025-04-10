@@ -1,11 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booking</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking</title>
+    <link rel="stylesheet" href="/static/css/booking.css" />
+    <link rel="stylesheet" href="/static/css/base.css" />
+    <script type="module" src="/static/js/booking.js"></script>
+  </head>
+  <body class="booking">
+    <div class="shadow"></div>
+    <div class="sign_in_box block_style">
+      <div class="border_style"></div>
+      <div class="block_title">登入會員帳號</div>
+      <input
+        type="email"
+        class="block_context signInEmail"
+        placeholder="輸入電子信箱"
+      />
+      <input
+        type="password"
+        class="block_context signInPassword"
+        placeholder="輸入密碼"
+      />
+      <button class="block_btn">登入帳戶</button>
+      <div class="alert_text"></div>
+      <div class="block_text sign_to_register">還沒有帳戶？點此註冊</div>
+      <img class="sign_in_x x_style" src="/static/img/x.png" />
+    </div>
+
+    <div class="register_box block_style">
+      <div class="border_style"></div>
+      <div class="block_title">註冊會員帳號</div>
+      <input
+        type="text"
+        class="block_context registerName"
+        placeholder="輸入姓名"
+      />
+      <input
+        type="email"
+        class="block_context registerEmail"
+        placeholder="輸入電子信箱"
+      />
+      <input
+        type="password"
+        class="block_context registerPassword"
+        placeholder="輸入密碼"
+      />
+      <button class="block_btn">註冊新帳戶</button>
+      <div class="alert_text"></div>
+      <div class="block_text register_to_sign">已經有帳戶了？點此登入</div>
+      <img class="register_x x_style" src="/static/img/x.png" />
+    </div>
+    <nav>
+      <div class="nav_container">
+        <div class="nav_title">台北一日遊</div>
+        <div class="nav_subtitle nav_reserve">預定行程</div>
+        <div class="nav_subtitle nav_sign">登入/註冊</div>
+      </div>
+    </nav>
+    <main>
+      <div class="main_layout">
+        <div class="first_line_text"></div>
+      </div>
+    </main>
+    <footer>
+      <div class="footer_text">COPYRIGHT © 2021 台北一日遊</div>
+    </footer>
+  </body>
 </html>

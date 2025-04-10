@@ -176,13 +176,13 @@ input[type="radio"]:checked {
   .attraction .nav_subtitle {
     width: 15%;
   }
-  .attraction .menu {
+  .menu {
     width: 100%;
   }
-  .attraction .line {
+  .line {
     width: 90%;
   }
-  .attraction .information {
+  .information {
     width: 90%;
   }
 }
@@ -196,17 +196,20 @@ input[type="radio"]:checked {
     justify-content: space-between;
   }
 
-  .attraction .menu {
+  .menu {
     display: block;
     height: auto;
     margin: 0 auto;
   }
-  .attraction .current_pic {
+  .current_pic {
     width: 100%;
     height: 350px;
   }
-  .attraction .profile {
+  .profile {
     width: 90%;
     margin: 20px auto;
+  }
+  .attraction .block_style {
+    width: 95%;
   }
 }
