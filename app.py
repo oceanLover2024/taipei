@@ -8,6 +8,7 @@ import jwt
 import mysql.connector
 from passlib.context import CryptContext
 from pydantic import BaseModel, EmailStr
+import requests
 def connect_mysql():
 	return  mysql.connector.connect( user="root",password="newPassword1234!", host="127.0.0.1", database="taipei_day_trip")
 app= FastAPI()
@@ -47,6 +48,27 @@ class CreateBooking(BaseModel):
 	date:date
 	time:str
 	price:int 
+
+class Contact(BaseModel):
+	name:str
+	email:EmailStr
+	phone:str
+class Attraction(BaseModel):	
+	attraction_id:int
+	attraction_name:str
+	address:str
+	image:str	
+class Trip(BaseModel):
+	attraction:Attraction
+	date:str
+	time:str
+class Orderdetail(BaseModel):
+	price:int
+	trip:Trip
+	contact:Contact
+class Order(BaseModel):
+	prime:str
+	order:Orderdetail
 @app.post("/api/user")
 def register(user:Register):
 	try:
@@ -139,8 +161,9 @@ def create_booking(create_data:CreateBooking,user:dict=Depends(verify_token)):
 		cursor.execute("INSERT INTO booking(member_id, attraction_id, date, time, price)values(%s,%s,%s,%s,%s)",((user["id"]), create_data.attractionId, create_data.date, create_data.time,create_data.price))
 		con.commit()
 		return {"ok": True}
-	except:
-		raise HTTPException(status_code=500,detail={"error":True,"message":"伺服器內部錯誤"})
+	except Exception as e:
+		print("錯誤",e)
+		raise HTTPException(status_code=500,detail={"error":True,"message":str(e)})
 	finally:
 		con.close()
 		cursor.close()
@@ -260,7 +283,108 @@ def mrt():
 		})
 	finally:		
 		cursor.close()
-		con.close()		
+		con.close()	
+#---------------------------------------	
+@app.post("/api/orders")
+def orders(orderData:Order,user:dict=Depends(verify_token)):
+	if not user:
+		raise HTTPException(status_code=403,detail={"error":True,"message":"未登入"})
+	order_number=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")+"_"+str(user["id"])
+	try:
+		con=connect_mysql()
+		cursor=con.cursor(dictionary=True)
+		cursor.execute("""
+		INSERT INTO orders(order_number, member_id, attraction_id, date, time, price, contact_name, contact_email, contact_phone)
+		VALUES( %s, %s, %s, %s, %s, %s, %s, %s, %s)""",(
+		order_number,
+		user["id"], 
+		orderData.order.trip.attraction.attraction_id,
+		orderData.order.trip.date,
+		orderData.order.trip.time,
+		orderData.order.price,
+		orderData.order.contact.name,
+		orderData.order.contact.email,
+		orderData.order.contact.phone,
+		))
+		con.commit()
+		response=requests.post("https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime",
+		headers={
+			"Content-Type":"application/json",
+			"x-api-key":"partner_UoNAMEazpyRBHmS7RPyPWpWfmDMFRVj2qwDJy6R7yTZYVJqTUgqdYNWr"
+		},
+		json={
+			"prime": orderData.prime,
+			"partner_key": "partner_UoNAMEazpyRBHmS7RPyPWpWfmDMFRVj2qwDJy6R7yTZYVJqTUgqdYNWr",
+			"merchant_id": "siao731_FUBON_POS_2",
+			"details":"Taipei_day_trip",
+			"amount": orderData.order.price,
+			"cardholder": {
+				"phone_number": orderData.order.contact.phone,
+				"name": orderData.order.contact.name,
+				"email": orderData.order.contact.email,						
+			},	
+		}
+		)
+		result=response.json()
+		status=result["status"]
+		msg=result["msg"]
+		if status== 0:
+			cursor.execute("UPDATE orders SET status=%s WHERE order_number=%s",("PAID", order_number))
+			cursor.execute("DELETE  FROM booking WHERE member_id=%s",(user["id"],))
+			con.commit()
+		return{
+			  "data": {
+				"number": order_number,
+				"payment": {
+				"status": status,
+				"message": msg
+				}
+			}}
+	except Exception as e :
+		con.rollback()
+		raise HTTPException(status_code=500, detail={"error":True,"message":str(e)})
+	finally:
+		con.close()
+		cursor.close()		
+@app.get("/api/order/{orderNumber}")
+def get_order(orderNumber:str,user:dict=Depends(verify_token)):
+	if not user:
+		raise HTTPException(status_code=403, detail={"error":True,"message":"未登入"})
+	try:
+		con=connect_mysql()
+		cursor=con.cursor(dictionary=True)
+		cursor.execute("SELECT orders.* ,attractions.name, attractions.address, imgs.url FROM orders JOIN attractions ON orders.attraction_id = attractions.id JOIN imgs ON orders.attraction_id = imgs.attraction_id   WHERE order_number=%s",(orderNumber,))
+		order_data=cursor.fetchone()	
+		status=0	
+		if order_data["status"]=="unpaid":
+			status=1
+			
+		return	{"data": {
+			"number": order_data["order_number"],
+			"price": order_data["price"],
+			"trip": {
+			"attraction": {
+				"id": order_data["attraction_id"],
+				"name": order_data["name"],
+				"address": order_data["address"],
+				"image": order_data["url"]
+			},
+			"date": order_data["date"],
+			"time": order_data["time"]
+			},
+			"contact": {
+			"name": order_data["contact_name"],
+			"email": order_data["contact_email"],
+			"phone": order_data["contact_phone"]
+			},
+			"status": status
+  			}}			
+	except Exception as e:
+		raise HTTPException(status_code=500,detail={"error":True,"message":str(e)})
+	finally:
+		con.close()
+		cursor.close()
+
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
 async def index(request: Request):
@@ -274,3 +398,4 @@ async def booking(request: Request):
 @app.get("/thankyou", include_in_schema=False)
 async def thankyou(request: Request):
 	return FileResponse("./static/thankyou.html", media_type="text/html")
+

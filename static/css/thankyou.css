@@ -1,0 +1,33 @@
+main div {
+  text-align: center;
+  margin: 30px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #666666;
+}
+.footer {
+  height: 800px;
+  align-items: first baseline;
+  padding-top: 20px;
+}
+.footer div {
+  color: #ffffff;
+}
+@media (max-width: 1200px) {
+  .thankyou .nav_container {
+    width: 90%;
+  }
+  .thankyou .nav_subtitle {
+    width: 15%;
+  }
+}
+@media (max-width: 600px) {
+  .thankyou .nav_title {
+    margin: 3px;
+  }
+  .thankyou .nav_subtitle {
+    flex: none;
+    width: 22%;
+    justify-content: space-between;
+  }
+}

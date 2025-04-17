@@ -17,10 +17,13 @@ export function renderContact() {
   phoneLabel.textContent = "手機號碼：";
   let nameInput = document.createElement("input");
   nameInput.type = "text";
+  nameInput.setAttribute("class", "contact_name");
   let mailInput = document.createElement("input");
   mailInput.type = "text";
+  mailInput.setAttribute("class", "contact_mail");
   let phoneInput = document.createElement("input");
   phoneInput.type = "tel";
+  phoneInput.setAttribute("class", "contact_tel");
   let contactText = document.createElement("div");
   contactText.setAttribute("class", "bolder_text");
   contactText.textContent =
