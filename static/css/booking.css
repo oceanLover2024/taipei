@@ -47,7 +47,6 @@ nav {
   margin: 18px 0 20px 0;
   color: #448899;
 }
-
 .bolder_text {
   font-weight: 700;
   font-size: 16px;
@@ -64,7 +63,10 @@ nav {
   top: 5%;
   right: 5%;
 }
-label {
+label,
+#card-number,
+#card-expiration-date,
+#card-ccv {
   font-size: 16px;
   font-weight: 400;
   color: #666666;
@@ -78,6 +80,23 @@ input {
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 15px;
+  padding-left: 10px;
+}
+.numContainer,
+.expirationContainer,
+.ccvContainer {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin: 10px;
+}
+#card-number,
+#card-expiration-date,
+#card-ccv {
+  width: 200px;
+  height: 38px;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
   padding-left: 10px;
 }
 .price_text {
@@ -97,6 +116,7 @@ input {
   font-size: 19px;
   display: block;
   margin: 20px 0 50px auto;
+  cursor: pointer;
 }
 .no_schedule_text {
   font-size: 16px;
