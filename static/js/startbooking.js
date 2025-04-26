@@ -18,6 +18,12 @@ export function startbooking() {
         alert("請選擇日期與時間");
         return;
       }
+      let today = new Date();
+      let selectedDate = new Date(date);
+      if (selectedDate < today.setHours(0, 0, 0, 0)) {
+        alert("請選擇今日以後的日期");
+        return;
+      }
 
       let time = timeInput.value;
       startloading();
