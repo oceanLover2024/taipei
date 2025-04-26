@@ -1,6 +1,7 @@
 import { createBox } from "./box.js";
 import { auth } from "./auth.js";
 import { startbooking } from "./startbooking.js";
+import { startloading, endloading } from "./loading.js";
 async function fetchAttraction() {
   try {
     const response = await fetch(
@@ -11,8 +12,13 @@ async function fetchAttraction() {
     console.log("fetchError:", e);
   }
 }
-fetchAttraction().then((result) => {
-  if (!result) return;
+async function loadingAttractionPage() {
+  startloading();
+  let result = await fetchAttraction();
+  if (!result) {
+    endloading();
+    return;
+  }
   const data = result["data"];
   document.querySelector(".profile_title").innerHTML = data["name"];
   document.querySelector(
@@ -53,7 +59,8 @@ fetchAttraction().then((result) => {
     "click",
     () => (document.querySelector(".fee").innerHTML = "新台幣2500元")
   );
-});
+  endloading();
+}
 let slideIndex = 0;
 function showSlides(x) {
   let slideimgs = document.querySelectorAll(".img_style");
@@ -76,6 +83,8 @@ document
 document
   .querySelector(".right_arrow")
   .addEventListener("click", () => plusSlide(1));
+
+loadingAttractionPage();
 createBox();
 auth();
 startbooking();

@@ -2,6 +2,7 @@ import { createBox } from "./box.js";
 import { auth } from "./auth.js";
 import { renderName, detailInfo } from "./bookRender.js";
 import { tappay } from "./tappay.js";
+import { startloading, endloading } from "./loading.js";
 document.addEventListener("DOMContentLoaded", async () => {
   let token = localStorage.getItem("token");
   if (!token) {
@@ -14,6 +15,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   tappay();
   let btn = document.querySelector(".price_btn");
   btn.addEventListener("click", () => {
+    let mail = document.querySelector(".contact_mail").value.trim();
+    let name = document.querySelector(".contact_name").value.trim();
+    let tel = document.querySelector(".contact_tel").value.trim();
+    if (!mail || !name || !tel) {
+      alert("請注意資料是否填寫完整");
+      return;
+    }
+    let emailRule = /^[\w\.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
+    if (!emailRule.test(mail)) {
+      alert("電子信箱格式錯誤");
+      return;
+    }
+    startloading();
     fetch("api/booking", {
       headers: { Authorization: "Bearer " + localStorage.getItem("token") },
     })
@@ -22,8 +36,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const bookingData = data.data;
         TPDirect.card.getPrime((result) => {
           if (result.status !== 0) {
-            alert("get prime error " + result.msg);
-            return;
+            alert("信用卡資料錯誤");
+            return endloading();
           }
           const prime = result.card.prime;
           const orderData = {
@@ -58,10 +72,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             .then((res) => res.json())
             .then((result) => {
               if (result.data && result.data.payment.status === 0) {
-                console.log(123);
                 location.href = "/thankyou?number=" + result.data.number;
               }
-            });
+            })
+            .catch(() => endloading())
+            .finally(() => endloading());
         });
       });
   });

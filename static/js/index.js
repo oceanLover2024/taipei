@@ -1,5 +1,6 @@
 import { createBox } from "./box.js";
 import { auth } from "./auth.js";
+import { startloading, endloading } from "./loading.js";
 let attraction_name = [];
 let categoryList = [];
 let mrtList = [];
@@ -31,6 +32,7 @@ async function fetchData(url) {
 }
 function getData() {
   loading = true;
+  startloading();
   let url = `/api/attractions?page=${nextPage}`;
   if (keyword) {
     url += `&keyword=${keyword}`;
@@ -49,7 +51,10 @@ function getData() {
       }
       renderData();
     })
-    .finally(() => (loading = false));
+    .finally(() => {
+      endloading();
+      loading = false;
+    });
 }
 function renderData() {
   let attractions = document.querySelector(".attractions");
@@ -105,7 +110,7 @@ function scrollMrt() {
   let mrt = document.querySelector(".mrt");
 
   fetchData(url).then((result) => {
-    if (!result) return;
+    if (!result || !result["data"]) return;
     const data = result["data"];
     for (let d in data) {
       let scrollStation = document.createElement("div");
