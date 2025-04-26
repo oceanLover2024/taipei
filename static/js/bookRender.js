@@ -9,7 +9,6 @@ export async function renderName() {
 export async function detailInfo() {
   try {
     let info = await getBookingInfo();
-    console.log(info);
     if (info) {
       renderAttractionContext(info);
       renderContact();

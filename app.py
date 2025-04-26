@@ -158,6 +158,8 @@ def get_booking(user:dict=Depends(verify_token)):
 	
 @app.post("/api/booking")
 def create_booking(create_data:CreateBooking,user:dict=Depends(verify_token)):
+	if create_data.date<date.today():
+		raise HTTPException(status_code=400,detail={"error":True,"message":"日期錯誤"})
 	try:
 		with connect_mysql() as con:
 			with con.cursor(dictionary=True, buffered=True) as cursor:		
@@ -265,9 +267,7 @@ def attraction(attractionId:int):
 def mrt():
 	try:
 		with connect_mysql() as con:
-			with con.cursor(dictionary=True) as cursor:
-				con = connect_mysql()
-				cursor = con.cursor(dictionary=True, buffered=True)
+			with con.cursor(dictionary=True, buffered=True) as cursor:				
 				cursor.execute("SELECT mrt, COUNT(*) from attractions WHERE mrt is not null GROUP BY mrt ORDER BY COUNT(*) desc")
 				result= cursor.fetchall()
 				data=[]

@@ -2,31 +2,48 @@ body {
   margin: 0;
   padding: 0;
 }
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 0%;
+  background-color: #448899;
+  z-index: 100;
+}
 .shadow {
-  display: none;
   position: fixed;
   width: 100%;
   height: 100%;
   z-index: 11;
   background-color: #000000;
-  opacity: 0.25;
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
 }
-.sign_in_box {
-  display: none;
+.shadow.active {
+  opacity: 0.25;
+  pointer-events: auto;
 }
 .block_style {
   position: fixed;
   z-index: 12;
   top: 70px;
   left: 50%;
-  transform: translate(-50%);
+  transform: translate(-50%, -130%);
   background-color: #ffffff;
   width: 340px;
   border-radius: 5px;
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.5s;
+  pointer-events: none;
 }
-.register_box {
-  display: none;
+.block_style.active {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  pointer-events: auto;
 }
+
 .border_style {
   height: 10px;
   width: 100%;
@@ -64,6 +81,10 @@ body {
   font-size: 20px;
   font-weight: 400;
   color: #ffffff;
+  cursor: pointer;
+}
+.block_btn:hover {
+  background-color: #476c75;
 }
 .alert_text {
   font-size: 16px;
@@ -87,6 +108,7 @@ body {
   position: absolute;
   top: 8%;
   right: 5%;
+  cursor: pointer;
 }
 .nav_container {
   display: flex;
@@ -104,6 +126,9 @@ body {
   font-size: 30px;
   cursor: pointer;
 }
+.nav_title:hover {
+  color: #476c75;
+}
 .nav_subtitle {
   flex: none;
   width: 8%;
@@ -112,6 +137,9 @@ body {
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
+}
+.nav_subtitle:hover {
+  color: #000000;
 }
 footer {
   background-color: #757575;

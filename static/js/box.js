@@ -5,29 +5,29 @@ function goHomePage() {
 }
 function generateSignInBox() {
   document.querySelector(".nav_sign").addEventListener("click", () => {
-    document.querySelector(".sign_in_box").style.display = "block";
-    document.querySelector(".shadow").style.display = "block";
+    document.querySelector(".shadow").classList.add("active");
+    document.querySelector(".sign_in_box").classList.add("active");
   });
 
   document.querySelector(".sign_in_x").addEventListener("click", () => {
-    document.querySelector(".sign_in_box").style.display = "none";
-    document.querySelector(".shadow").style.display = "none";
+    document.querySelector(".sign_in_box").classList.remove("active");
+    document.querySelector(".shadow").classList.remove("active");
   });
 }
 function sign_to_register() {
   document.querySelector(".sign_to_register").addEventListener("click", () => {
-    document.querySelector(".sign_in_box").style.display = "none";
-    document.querySelector(".register_box").style.display = "block";
+    document.querySelector(".sign_in_box").classList.remove("active");
+    document.querySelector(".register_box").classList.add("active");
   });
 }
 function register_to_sign() {
   document.querySelector(".register_to_sign").addEventListener("click", () => {
-    document.querySelector(".register_box").style.display = "none";
-    document.querySelector(".sign_in_box").style.display = "block";
+    document.querySelector(".register_box").classList.remove("active");
+    document.querySelector(".sign_in_box").classList.add("active");
   });
   document.querySelector(".register_x").addEventListener("click", () => {
-    document.querySelector(".register_box").style.display = "none";
-    document.querySelector(".shadow").style.display = "none";
+    document.querySelector(".register_box").classList.remove("active");
+    document.querySelector(".shadow").classList.remove("active");
   });
 }
 function navReserve() {

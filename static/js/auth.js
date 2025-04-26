@@ -29,6 +29,25 @@ export function auth() {
   document
     .querySelector(".sign_in_box button")
     .addEventListener("click", () => {
+      let email = document.querySelector(".signInEmail").value.trim();
+      let password = document.querySelector(".signInPassword").value.trim();
+      if (!email && !password) {
+        return (document.querySelector(".sign_in_box .alert_text").textContent =
+          "請輸入電子信箱及密碼");
+      }
+      if (!email) {
+        return (document.querySelector(".sign_in_box .alert_text").textContent =
+          "請輸入電子信箱");
+      }
+      if (!password) {
+        return (document.querySelector(".sign_in_box .alert_text").textContent =
+          "請輸入密碼");
+      }
+      let emailRule = /^[\w\.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
+      if (!emailRule.test(email)) {
+        return (document.querySelector(".sign_in_box .alert_text").textContent =
+          "電子郵件格式不正確");
+      }
       fetch("/api/user/auth", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

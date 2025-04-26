@@ -27,6 +27,7 @@ nav {
   position: absolute;
   top: 40%;
   left: 10px;
+  cursor: pointer;
 }
 .right_arrow {
   width: 36px;
@@ -35,6 +36,7 @@ nav {
   position: absolute;
   top: 41%;
   right: 10px;
+  cursor: pointer;
 }
 .left_arrow:hover,
 .right_arrow:hover {
@@ -116,10 +118,13 @@ input[type="date"] {
   background-position: right 8px center;
   background-repeat: no-repeat;
   background-image: url("/static/img/calendar.png");
+  cursor: text;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
+  cursor: pointer;
 }
+
 input[type="radio"] {
   appearance: none;
   width: 22px;
@@ -144,6 +149,9 @@ input[type="radio"]:checked {
   color: #ffffff;
   border: none;
   cursor: pointer;
+}
+.submit_btn:hover {
+  background-color: #476c75;
 }
 .line {
   width: 1200px;
