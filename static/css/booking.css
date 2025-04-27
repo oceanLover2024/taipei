@@ -62,6 +62,7 @@ nav {
   position: absolute;
   top: 5%;
   right: 5%;
+  cursor: pointer;
 }
 label,
 #card-number,
@@ -70,7 +71,6 @@ label,
   font-size: 16px;
   font-weight: 400;
   color: #666666;
-  margin-bottom: 50px;
 }
 input {
   width: 200px;
@@ -88,7 +88,7 @@ input {
   display: flex;
   align-items: center;
   height: 50px;
-  margin: 10px;
+  margin-top: 10px;
 }
 #card-number,
 #card-expiration-date,
@@ -117,6 +117,9 @@ input {
   display: block;
   margin: 20px 0 50px auto;
   cursor: pointer;
+}
+.price_btn:hover {
+  background-color: #476c75;
 }
 .no_schedule_text {
   font-size: 16px;
